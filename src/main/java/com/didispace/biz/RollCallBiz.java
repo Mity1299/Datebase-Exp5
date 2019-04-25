@@ -30,7 +30,8 @@ public interface RollCallBiz {
 	/**
 	 * 根据课程编号返回课程时间列表
 	 */
-	public List<TempClassTime> selectClassTimeBy(Integer cId);
+	public List<TempClassTime> selectClassTimeByCId(Integer cId);
+	
 	public Course selectCouseByCId(Integer courseId);
 
 }

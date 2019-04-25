@@ -85,8 +85,13 @@ public class RollCallBizImpl implements RollCallBiz{
 	}
 
 
+	/**
+	 * 	根据课程编号获得course：获得课程名称
+		根据课程编号获得section:获得第几次课，是否点过名
+		根据secion.time_slot_id和获得time:获得第几周，周几，开始时间
+	 */
 	@Override
-	public List<TempClassTime> selectClassTimeBy(Integer cId) {
+	public List<TempClassTime> selectClassTimeByCId(Integer cId) {
 		// TODO Auto-generated method stub
 		ArrayList<TempClassTime> tClassTimeList = new ArrayList<TempClassTime>();
 		
@@ -110,6 +115,7 @@ public class RollCallBizImpl implements RollCallBiz{
 			tClassTimeList.add(tClassTime);
 		}
 		return tClassTimeList;
+
 	}
 
 
