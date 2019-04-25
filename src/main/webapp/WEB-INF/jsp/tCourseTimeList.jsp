@@ -20,7 +20,7 @@
        </tr>
 		<c:forEach items="${tempClassTimeList}" var="tClassTime">
            <tr>
-               <td><a href="/rollcall/rollDeatils/${tClassTime.timeSlotId}/${course.courseId}">${tClassTime.count}</a></td>
+               <td><a href="/rollcall/rollDeatils/${tClassTime.timeSlotId}/${course.courseId}/${tClassTime.count}">${tClassTime.count}</a></td>
                <td>${tClassTime.status}</td>
                <td>${tClassTime.week}</td>
                <td>${tClassTime.day}</td>

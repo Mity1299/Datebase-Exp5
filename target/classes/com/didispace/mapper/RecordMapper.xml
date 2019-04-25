@@ -31,6 +31,42 @@
     where time_slot_id = #{timeSlotId,jdbcType=INTEGER}
       and s_id = #{sId,jdbcType=INTEGER}
   </select>
+  
+  <select id="selectAtdanceStuByTimeIdByCId" parameterType="java.lang.Integer" resultMap="VAttendanceStuMap">
+    <!--
+        * 根据课次和课程编号查找签到列表
+    * 返回值为：学生编号，学生名字，班级，签到情况
+    -->
+    select 
+    re.s_id,s_name,class_name,attendance
+	from record as re LEFT JOIN 
+	(student as s LEFT JOIN class as c on s.class_id=c.class_id) 
+	on re.s_id=s.s_id
+	where time_slot_id =#{timeSlotId,jdbcType=INTEGER} and re.s_id in(
+		select s_id 
+		from takes
+		where course_id=#{courseId,jdbcType=INTEGER}
+	)
+  </select>
+  
+    <resultMap type="com.didispace.viewEntity.VAttendanceStu" id="VAttendanceStuMap">
+        <!-- property 表示com.mybatis.bean.StudentTemp中的属性； column 表示表中的列名 -->
+        <id property="stuId" column="s_id" />
+        <result property="stuName" column="s_name" />
+        <result property="attendance" column="attendance" />
+
+        <!-- association字面意思关联，这里只专门做一对一关联； property表示是com.mybatis.bean.StudentTemp中的属性名称； 
+            javaType表示该属性是什么类型对象 -->
+        <association property="classTemp" javaType="com.didispace.entity.Class">
+            <!-- property 表示com.mybatis.bean.Class中的属性； column 表示表中的列名 -->
+            <id property="classId" column="class_id" />
+            <result property="className" column="class_name" />
+        </association>
+    </resultMap>
+  
+  
+  
+  
   <delete id="deleteByPrimaryKey" parameterType="com.didispace.entity.RecordKey">
     <!--
       WARNING - @mbg.generated

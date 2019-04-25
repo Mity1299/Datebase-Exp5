@@ -15,10 +15,12 @@ import com.didispace.entity.TempClassTime;
 import com.didispace.entity.TimeSlot;
 import com.didispace.mapper.CourseMapper;
 import com.didispace.mapper.PersonInfoMapper;
+import com.didispace.mapper.RecordMapper;
 import com.didispace.mapper.SectionMapper;
 import com.didispace.mapper.StudentMapper;
 import com.didispace.mapper.TeacherMapper;
 import com.didispace.mapper.TimeSlotMapper;
+import com.didispace.viewEntity.VAttendanceStu;
 @Service(value="rollCallBiz")
 public class RollCallBizImpl implements RollCallBiz{
 
@@ -34,6 +36,9 @@ public class RollCallBizImpl implements RollCallBiz{
 	SectionMapper sectionMapper;
 	@Autowired
 	TimeSlotMapper timeSlotMapper;
+	@Autowired
+	RecordMapper recordMapper;
+	
 	
 	@Override
 	public List<Course> findCourseByTId(Integer tId) {
@@ -118,7 +123,19 @@ public class RollCallBizImpl implements RollCallBiz{
 
 	}
 
+	
+  @Override public List<VAttendanceStu> selectAtdanceStuByTimeIdByCId(
+		  Integer timeSlotId, Integer courseId) { 
+	  // TODO Auto-generated method stub return
+	  return recordMapper.selectAtdanceStuByTimeIdByCId(timeSlotId, courseId); 
+  }
 
+	@Override
+	public TimeSlot selectTimeByTimeId(Integer timeId) {
+		// TODO Auto-generated method stub
+		return timeSlotMapper.selectByPrimaryKey(timeId);
+	}
+ 
 	
 	
 	

@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.didispace.biz.RollCallBiz;
 import com.didispace.entity.Course;
 import com.didispace.entity.TempClassTime;
+import com.didispace.entity.TimeSlot;
+import com.didispace.viewEntity.VAttendanceStu;
 
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -59,29 +61,32 @@ public class RollCallController {
 	}
 
 	
-	/*
-	 * @ApiOperation(value="查看课次学生考勤详情 ", notes="输入课次编号和课程编号，输出该课堂学生的考勤情况")
-	 * 
-	 * @ApiImplicitParams({
-	 * 
-	 * @ApiImplicitParam(name = "name", value = "用户名称", required = true, dataType =
-	 * "String", paramType = "path"),
-	 * 
-	 * @ApiImplicitParam(name = "passwd", value = "用户密码", required = true, dataType
-	 * = "Integer"),
-	 * 
-	 * @ApiImplicitParam(name = "identity", value = "用户身份，1为学生，2为教师", required =
-	 * true, dataType = "Integer") })
-	 * 
-	 * @RequestMapping(value="/rollDeatils/{timeSlotId}/{courseId}",
-	 * method=RequestMethod.GET) public String
-	 * findRollDeatils(@PathVariable("timeSlotId") Integer timeSlotId,
-	 * 
-	 * @PathVariable("courseId") Integer courseId, ModelMap model) {
-	 * List<VAttendanceStu> vAttendanceStuList =
-	 * rollCallBiz.selectAtdanceStuByTimeIdByCId( timeSlotId, courseId);
-	 * model.addAttribute("vAttendanceStuList", vAttendanceStuList); return
-	 * "tRollDetails"; }
-	 */
+	  @ApiOperation(value="查看课次学生考勤详情 ", notes="输入课次编号和课程编号，输出该课堂学生的考勤情况")
+	  @ApiImplicitParams({
+		  @ApiImplicitParam(name = "name", value = "用户名称", required = true, dataType =
+		  "String", paramType = "path"),
+		  @ApiImplicitParam(name = "passwd", value = "用户密码", required = true, dataType
+		  = "Integer"),
+		  @ApiImplicitParam(name = "identity", value = "用户身份，1为学生，2为教师", required =
+		  true, dataType = "Integer") })
+	  @RequestMapping(value="/rollDeatils/{timeSlotId}/{courseId}/{count}",
+	  				  method=RequestMethod.GET) public String
+	  findRollDeatils(@PathVariable("timeSlotId") Integer timeSlotId,
+			  		  @PathVariable("courseId") Integer courseId, 
+			  		  @PathVariable("count") Integer count, 
+			  		  ModelMap model) {
+		  List<VAttendanceStu> vAttendanceStuList =
+		  rollCallBiz.selectAtdanceStuByTimeIdByCId( timeSlotId, courseId);
+		  Course course = rollCallBiz.selectCouseByCId(courseId);
+		  TimeSlot timeslot = rollCallBiz.selectTimeByTimeId(timeSlotId);
+		  
+		  
+		  model.addAttribute("count", count);
+		  model.addAttribute("timeslot", timeslot);
+		  model.addAttribute("course", course);
+		  model.addAttribute("vAttendanceStuList", vAttendanceStuList); 
+		  
+		  return "tRollDetails"; 
+	  }
 	 
 }

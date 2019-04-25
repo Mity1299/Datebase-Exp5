@@ -8,6 +8,8 @@ import com.didispace.entity.Course;
 import com.didispace.entity.Student;
 import com.didispace.entity.Teacher;
 import com.didispace.entity.TempClassTime;
+import com.didispace.entity.TimeSlot;
+import com.didispace.viewEntity.VAttendanceStu;
 
 public interface RollCallBiz {
 	
@@ -34,4 +36,7 @@ public interface RollCallBiz {
 	
 	public Course selectCouseByCId(Integer courseId);
 
+	public List<VAttendanceStu> selectAtdanceStuByTimeIdByCId(Integer timeSlotId,Integer courseId);
+
+	public TimeSlot selectTimeByTimeId(Integer timeId);
 }

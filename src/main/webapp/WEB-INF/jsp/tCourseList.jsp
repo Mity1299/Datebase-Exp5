@@ -15,6 +15,7 @@
 			<td><a href="/rollcall/callname/${c.courseId}">${c.title}</a><br/></td>
 		</tr>
 	</c:forEach>
+	
 		
 	
 </body>
