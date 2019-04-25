@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8"/>
+	<title>教师界面课程列表</title>
+</head>
+<!--显示某个教师的任课课程列表
+	 同时点击课程名称可以进入课程时间界面
+ -->
+<body>
+	<table border="1">	
+		<tr th:each="course : ${courseList}">
+		<!-- 其中m是个临时变量，像for(User u : userList)那样中的u-->		
+		<a th:href="/rollcall/courseTimeList"></a><td th:text="${course.title}"/>		
+	</tr></table>
+</body>
+</html>
