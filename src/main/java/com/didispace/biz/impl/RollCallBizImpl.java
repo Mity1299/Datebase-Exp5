@@ -21,6 +21,7 @@ import com.didispace.mapper.StudentMapper;
 import com.didispace.mapper.TeacherMapper;
 import com.didispace.mapper.TimeSlotMapper;
 import com.didispace.viewEntity.VAttendanceStu;
+import com.didispace.viewEntity.VStuAndClass;
 @Service(value="rollCallBiz")
 public class RollCallBizImpl implements RollCallBiz{
 
@@ -134,6 +135,12 @@ public class RollCallBizImpl implements RollCallBiz{
 	public TimeSlot selectTimeByTimeId(Integer timeId) {
 		// TODO Auto-generated method stub
 		return timeSlotMapper.selectByPrimaryKey(timeId);
+	}
+
+	@Override
+	public List<VStuAndClass> selectStuByCourseId(Integer courseId) {
+		// TODO Auto-generated method stub
+		return studentMapper.selectByCId(courseId);
 	}
  
 	

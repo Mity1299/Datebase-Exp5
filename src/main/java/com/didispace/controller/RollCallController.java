@@ -3,6 +3,7 @@ package com.didispace.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,9 +13,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.didispace.biz.RollCallBiz;
 import com.didispace.entity.Course;
+import com.didispace.entity.Student;
 import com.didispace.entity.TempClassTime;
 import com.didispace.entity.TimeSlot;
 import com.didispace.viewEntity.VAttendanceStu;
+import com.didispace.viewEntity.VStuAndClass;
 
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -63,11 +66,11 @@ public class RollCallController {
 	
 	  @ApiOperation(value="查看课次学生考勤详情 ", notes="输入课次编号和课程编号，输出该课堂学生的考勤情况")
 	  @ApiImplicitParams({
-		  @ApiImplicitParam(name = "name", value = "用户名称", required = true, dataType =
-		  "String", paramType = "path"),
-		  @ApiImplicitParam(name = "passwd", value = "用户密码", required = true, dataType
+		  @ApiImplicitParam(name = "timeSlotId", value = "课次编号", required = true, dataType =
+		  "Integer", paramType = "path"),
+		  @ApiImplicitParam(name = "courseId", value = "课程编号", required = true, dataType
 		  = "Integer"),
-		  @ApiImplicitParam(name = "identity", value = "用户身份，1为学生，2为教师", required =
+		  @ApiImplicitParam(name = "count", value = "这是这门课的第几次课", required =
 		  true, dataType = "Integer") })
 	  @RequestMapping(value="/rollDeatils/{timeSlotId}/{courseId}/{count}",
 	  				  method=RequestMethod.GET) public String
@@ -88,5 +91,48 @@ public class RollCallController {
 		  
 		  return "tRollDetails"; 
 	  }
-	 
+	  
+	  
+	  @ApiOperation(value="点名 ", notes="输入课次编号和课程编号，输出考勤名单")
+	  @ApiImplicitParams({
+		  @ApiImplicitParam(name = "timeSlotId", value = "课次编号", required = true, dataType =
+		  "Integer", paramType = "path"),
+		  @ApiImplicitParam(name = "courseId", value = "课程编号", required = true, dataType
+		  = "Integer"),
+		  @ApiImplicitParam(name = "count", value = "这是这门课的第几次课", required =
+		  true, dataType = "Integer") })
+	  @RequestMapping(value="/rollcallNow/{timeSlotId}/{courseId}/{count}",
+	  				  method=RequestMethod.GET) 
+	  public String rollCallNow(
+			  		  @PathVariable("timeSlotId") Integer timeSlotId,
+			  		  @PathVariable("courseId") Integer courseId, 
+			  		  @PathVariable("count") Integer count, 
+			  		  ModelMap model) {
+		  List<VStuAndClass> stuAndClassList =rollCallBiz.selectStuByCourseId(courseId);
+		  Course course = rollCallBiz.selectCouseByCId(courseId);
+		  TimeSlot timeslot = rollCallBiz.selectTimeByTimeId(timeSlotId);
+
+		  
+		  model.addAttribute("count", count);
+		  model.addAttribute("timeslot", timeslot);
+		  model.addAttribute("course", course);
+		  model.addAttribute("stuAndClassList", stuAndClassList); 
+
+		  return "tRollCall";
+	  }
+	  
+	  
+	  @RequestMapping(value="/rocallnow.do/{courseId}",method =RequestMethod.POST)
+	  public String insertRollCall(
+			  @RequestParam("courseId") Integer courseId
+			  ) {
+		  
+		  
+		  return "redirect:/rollcall/callname/"+courseId;
+	  }
+	  
+	  
+	  
+	  
+	  
 }

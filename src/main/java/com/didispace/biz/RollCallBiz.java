@@ -10,6 +10,7 @@ import com.didispace.entity.Teacher;
 import com.didispace.entity.TempClassTime;
 import com.didispace.entity.TimeSlot;
 import com.didispace.viewEntity.VAttendanceStu;
+import com.didispace.viewEntity.VStuAndClass;
 
 public interface RollCallBiz {
 	
@@ -39,4 +40,8 @@ public interface RollCallBiz {
 	public List<VAttendanceStu> selectAtdanceStuByTimeIdByCId(Integer timeSlotId,Integer courseId);
 
 	public TimeSlot selectTimeByTimeId(Integer timeId);
+	/**
+	 * 根据课程编号查找这节课的学生名单
+	 */
+	public List<VStuAndClass> selectStuByCourseId(Integer courseId);
 }

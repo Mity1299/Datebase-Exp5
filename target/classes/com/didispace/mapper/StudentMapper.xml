@@ -44,6 +44,27 @@
   </select>
   
   
+  <select id="selectByCId" parameterType="java.lang.Integer" resultMap="VStuAndClassMap">
+    <!--
+      
+    -->
+    select s.s_id,s.s_name,c.class_id,c.class_name
+	from 
+	(student as s LEFT JOIN class as c on s.class_id=c.class_id) 
+	LEFT JOIN takes AS re
+	on re.s_id=s.s_id
+	where re.course_id=#{courseId,jdbcType=VARCHAR}
+  </select>
+  
+  <resultMap type="com.didispace.viewEntity.VStuAndClass" id="VStuAndClassMap">
+  	<id property="stuId" column="s_id"/>
+  	<result property="stuName" column="s_name"/> 
+  	<association property="classTemp" javaType="com.didispace.entity.Class">
+  		<id property="classId" column="class_id"/>
+  		<result property="className" column="class_name"/>
+  	</association>
+  </resultMap>
+  
   
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     <!--

@@ -17,6 +17,7 @@
            <td>教学周</td>
            <td>周几</td>
            <td>开始时间</td>
+           <td>点名</td>
        </tr>
 		<c:forEach items="${tempClassTimeList}" var="tClassTime">
            <tr>
@@ -27,6 +28,7 @@
                <td>
               	<fmt:formatDate value="${tClassTime.startTime}" pattern="HH:mm"/>
               	</td>
+               <td><a href="/rollcall/rollcallNow/${tClassTime.timeSlotId}/${course.courseId}/${tClassTime.count}">点名</a></td>
            </tr>
 		</c:forEach>
    </table>

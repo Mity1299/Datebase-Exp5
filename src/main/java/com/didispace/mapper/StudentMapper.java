@@ -1,6 +1,9 @@
 package com.didispace.mapper;
 
+import java.util.List;
+
 import com.didispace.entity.Student;
+import com.didispace.viewEntity.VStuAndClass;
 
 public interface StudentMapper {
     /**
@@ -43,6 +46,13 @@ public interface StudentMapper {
      */
     Student selectBySname(String sname);
 
+    /**
+     * 根据课程编号查找学生名单
+     * @param record
+     * @return
+     */
+    List<VStuAndClass> selectByCId(Integer courseId);
+    
     
     int updateByPrimaryKeySelective(Student record);
 
